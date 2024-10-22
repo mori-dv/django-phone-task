@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Brand List{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <h2 class="col">Phone List</h2>
+        <div class="col text-end">
+            <a class="btn btn-primary" role="button" href="{% url "core:add_brand" %}">Add Brand</a>
+            <a class="btn btn-primary" role="button" href="{% url "core:add_phone" %}">Add Phone</a>
+            <a class="btn btn-secondary" role="button" href="{% url "core:phone_list" %}">Phone List</a>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Nationality</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for brand in brands %}
+            <tr>
+                <td>{{ brand.name }}</td>
+                <td>{{ brand.nationality }}</td>
+                <td>
+                    <a href="{% url 'core:edit_brand' brand.id %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'core:delete_brand' brand.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

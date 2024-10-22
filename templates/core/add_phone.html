@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% block title %}Phone Create{% endblock %}
+{% block content %}
+<div class="container mt-5 w-50 mb-5">
+    <h2 class="text-center">Add Phone</h2>
+    <form method="post">
+        {% if form.errors %}
+            <div class="errors">
+                {{ form.errors }}
+            </div>
+        {% endif %}
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary mt-3">Add Phone</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
