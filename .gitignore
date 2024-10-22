@@ -5,7 +5,7 @@ env/
 .env/
 .idea/
 .DS_Store/
-
+todo.txt
 ###
 
 ### Django ###
