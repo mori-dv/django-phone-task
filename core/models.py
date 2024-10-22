@@ -14,7 +14,7 @@ class Brand(models.Model):
 class Phone(models.Model):
 
     class Status(models.TextChoices):
-        exist = "Eٍ", "Exist"
+        exist = "E", "Exist"
         notExist = "N", "NotExist"
 
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name='phones')
