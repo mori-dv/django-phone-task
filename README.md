@@ -13,14 +13,14 @@ This project is a Django-based mobile inventory system, designed for managing br
 ## Project Setup
 
 ### Prerequisites
-- Python 3.10
-- PostgreSQL 13
+- Python 3.12
+- PostgreSQL 14
 
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/mobile-inventory.git
-   cd mobile-inventory
+   git clone https://github.com/mori-dv/django-phone-task.git
+   cd django-phone-task
    ```
 
 2. Install the required Python packages:
@@ -33,19 +33,24 @@ This project is a Django-based mobile inventory system, designed for managing br
    python manage.py migrate
    ```
 
-4. Create a superuser to access the admin panel:
-   ```bash
-   python manage.py createsuperuser
-   ```
 
 ### Running the Project
-- Once the project is running, access it at `http://localhost:8000`.
-- The admin panel can be accessed at `http://localhost:8000/adm-pnl` for managing users and data.
+- Once the project is running, access it at `http://localhost:8000/`.
+- You can also register a user at `http://localhost:8000/users/register/` for using the system
+- reports are available at `http://localhost:8000/reports/` but needs authenticated user.
+
+
+### Running Tests
+The project uses PostgreSQL as the main database and SQLite for testing purposes to ensure faster and isolated test runs. 
+- To run tests you can the following command:
+   ```bash
+   python manage.py test 
+   ```
 
 ## API Endpoints
 
-- **Search Phones**: `/api/search/` - Allows users to search for phones by brand or model name.
-- **Nationality Equal Country Report**: `/api/report/` - Generates a report of phones where the brand nationality matches the country of manufacture.
+- **Search Phones**: `/search/` - Allows users to search for phones by brand or model name.
+- **Reports**: `/reports/` - Generated reports of phones or brands.
 - **CRUD Operations**: CRUD operations are available for both Phone and Brand models through the Django admin interface or through custom views.
 
 ## Models
@@ -62,5 +67,4 @@ This project is a Django-based mobile inventory system, designed for managing br
 - Add unit tests to further validate the system.
 - Implement more advanced filtering and reporting features.
 - Expand user roles and permissions for finer access control.
-
 
