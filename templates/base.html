@@ -10,7 +10,10 @@
 {% endblock %}
 </head>
 <body>
-
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    {% block navbar %}
+    {% endblock %}
+</nav>
 {% block content %}
 {% endblock %}
 </body>

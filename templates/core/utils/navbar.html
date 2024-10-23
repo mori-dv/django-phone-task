@@ -1,0 +1,30 @@
+<div class="collapse navbar-collapse row ms-4" id="navbarSupportedContent">
+    <ul class="navbar-nav col mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'core:phone_list' %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="{% url "core:reports" %}">Reports</a>
+      </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url "core:brand_list" %}">Brand List</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url "core:phone_list" %}">Phone List</a>
+        </li>
+    </ul>
+    <div class="col-md-1 text-end">
+        {% if request.user.is_authenticated %}
+            <form action="{% url 'users:logout' %}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-outline-danger" type="submit">Logout</button>
+            </form>
+        {% else %}
+            <a class="btn btn-outline-success" role="button" href="{% url "users:login" %}">Login</a>
+        {% endif %}
+    </div>
+    <form class="form-inline col-md-4 d-flex me-4" action="{% url "core:search_api" %}">
+      <input name="q" class="form-control me-1" type="search" placeholder="Search brand" aria-label="Search">
+      <button class="btn btn-sm btn-outline-success " type="submit">search</button>
+    </form>
+  </div>

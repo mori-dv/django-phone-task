@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}Brand List{% endblock %}
+{% block navbar %}
+    {% include "core/utils/navbar.html" %}
+{% endblock %}
 {% block content %}
 <div class="container mt-5">
     <div class="row">
-        <h2 class="col">Phone List</h2>
+        <h2 class="col">
+            Brand List / <a class="text-link text-decoration-none" href="{% url "core:phone_list" %}">Phone List</a>
+        </h2>
         <div class="col text-end">
             <a class="btn btn-primary" role="button" href="{% url "core:add_brand" %}">Add Brand</a>
-            <a class="btn btn-primary" role="button" href="{% url "core:add_phone" %}">Add Phone</a>
-            <a class="btn btn-secondary" role="button" href="{% url "core:phone_list" %}">Phone List</a>
         </div>
     </div>
     <table class="table table-striped">

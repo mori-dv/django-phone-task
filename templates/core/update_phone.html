@@ -2,8 +2,11 @@
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 {% block title %}Update Phone{% endblock %}
+{% block navbar %}
+    {% include "core/utils/navbar.html" %}
+{% endblock %}
 {% block content %}
-<div class="container mt-5">
+<div class="container mt-5 w-50">
     <h2>Edit Phone</h2>
     <form method="post">
         {% csrf_token %}

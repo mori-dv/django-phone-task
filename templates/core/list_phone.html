@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}Phone List{% endblock %}
+{% block navbar %}
+    {% include "core/utils/navbar.html" %}
+{% endblock %}
 {% block content %}
 <div class="container mt-5">
     <div class="row">
-        <h2 class="col">Phone List</h2>
+        <h2 class="col">
+            Phone List / <a class="text-link text-decoration-none" href="{% url "core:brand_list" %}">Brand List</a>
+        </h2>
         <div class="col text-end">
-            <a class="btn btn-primary" role="button" href="{% url "core:add_brand" %}">Add Brand</a>
             <a class="btn btn-primary" role="button" href="{% url "core:add_phone" %}">Add Phone</a>
-            <a class="btn btn-secondary" role="button" href="{% url "core:brand_list" %}">Brand List</a>
-
         </div>
     </div>
     <table class="table table-striped">
@@ -35,7 +37,11 @@
                 <td>{{ phone.color }}</td>
                 <td>{{ phone.screen_size }}</td>
                 <td>
-                    {{ phone.status }}
+                    {% if phone.status == "E" %}
+                        +
+                    {% else %}
+                        -
+                    {% endif %}
                 </td>
                 <td>{{ phone.country_of_manufacture }}</td>
                 <td>

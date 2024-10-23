@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Search{% endblock %}
+{% block navbar %}
+    {% include "core/utils/navbar.html" %}
+{% endblock %}
+{% block content %}
+<div class="container mt-5 w-75 mx-auto text-center">
+    <h2>Search</h2>
+    <form method="get" action="{% url 'core:search_api' %}">
+        <div class="mt-5 d-flex">
+            <label for="search">
+            </label>
+            <input id="search" type="text" name="q" class="form-control w-75 d-flex" placeholder="Search for brands">
+            <button class="btn btn-primary d-flex ms-2" type="submit">Search</button>
+        </div>
+    </form>
+    <div id="search-results"></div>
+</div>
+{% endblock %}
