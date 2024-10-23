@@ -12,8 +12,12 @@ from .views import (
     BrandUpdateView,
     BrandDeleteView,
 
-    PhoneReportView,
-    BrandReportView,
+    ReportsView,
+    NationalityEqualCountryReportView,
+    KoreanBrandReportView,
+
+    SearchView,
+    SearchAPIView
 )
 
 
@@ -29,6 +33,10 @@ urlpatterns = [
     path('brand/delete/<int:pk>/', BrandDeleteView.as_view(), name='delete_brand'),
     path('brand/', BrandListView.as_view(), name='brand_list'),
 
-    path('report/phone/', PhoneReportView.as_view(), name='phone_report'),
-    path('report/brand/', BrandReportView.as_view(), name='brand_report'),
+    path("reports/", ReportsView.as_view(), name="reports"),
+    path('reports/equal_nationality/', NationalityEqualCountryReportView.as_view(), name='equality_brand'),
+    path("reports/korean/", KoreanBrandReportView.as_view(), name="korean_brand"),
+
+    path('search/', SearchView.as_view(), name='search'),
+    path('api/search/', SearchAPIView.as_view(), name='search_api'),
 ]

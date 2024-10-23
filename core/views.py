@@ -1,10 +1,12 @@
+from django.db.models import F
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from django.views import View
 from django.views.generic import (
     CreateView,
     UpdateView,
     ListView,
-    DeleteView
+    DeleteView, TemplateView, DetailView
 )
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -105,20 +107,73 @@ class BrandDeleteView(LoginRequiredMixin, DeleteView):
 
 
 # ########### Reports #############
-class PhoneReportView(LoginRequiredMixin, ListView):
+class ReportsView(LoginRequiredMixin, TemplateView):
+    template_name = 'core/reports.html'
+
+
+# Search API View
+class SearchAPIView(View):
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get('q', None)
+        print(query)
+        if query:
+            phones = Phone.objects.filter(brand__name__icontains=query)
+            phones_data = [
+                {
+                    'id': phone.id,
+                    'brand': phone.brand.name,
+                    'model': phone.model,
+                    'price': phone.price,
+                    'color': phone.color,
+                    'screen_size': phone.screen_size,
+                    'status': phone.status,
+                    'country_of_manufacture': phone.country_of_manufacture
+                } for phone in phones
+            ]
+            return JsonResponse({'phones': phones_data}, safe=False)
+        return JsonResponse({'error': 'No query provided'}, status=400)
+
+
+# Search Template View
+class SearchView(TemplateView):
+    template_name = "core/search_brand.html"
+
+
+class NationalityEqualCountryReportView(LoginRequiredMixin, View):
     model = Phone
 
-    def render_to_response(self, context, **response_kwargs):
-        phones = Phone.objects.select_related('brand').all().values(
-            'brand__name', 'model', 'price', 'color', 'screen_size', 'status', 'country_of_manufacture'
-        )
-        return JsonResponse(list(phones), safe=False)
+    def get(self, request, *args, **kwargs):
+        phones = self.model.objects.filter(brand__nationality=F("country_of_manufacture"))
+        response = [
+            {
+                "brand": phone.brand.name,
+                "brand nationality": phone.brand.nationality,
+                "model": phone.model,
+                "price": phone.price,
+                "screen_size": phone.screen_size,
+                "status": phone.status,
+                "country_of_manufacture": phone.country_of_manufacture
+            } for phone in phones
+        ]
+        return JsonResponse({"phones": response}, safe=False)
 
 
-class BrandReportView(LoginRequiredMixin, ListView):
-    model = Brand
+class KoreanBrandReportView(LoginRequiredMixin, View):
+    model = Phone
 
-    def render_to_response(self, context, **response_kwargs):
-        brands = Brand.objects.prefetch_related('phones').all().values('name', 'nationality')
-        return JsonResponse(list(brands), safe=False)
+    def get(self, context, *args, **kwargs):
+        phones = self.model.objects.filter(brand__nationality__icontains='Korea')
+
+        data = [
+            {
+                "brand": phone.brand.name,
+                "brand nationality": phone.brand.nationality,
+                "model": phone.model,
+                "price": phone.price,
+                "screen_size": phone.screen_size,
+                "status": phone.status,
+                "country_of_manufacture": phone.country_of_manufacture
+            } for phone in phones]
+
+        return JsonResponse({"phones": data}, safe=False)
 
