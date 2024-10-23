@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
@@ -6,18 +7,12 @@ from django.views.generic import (
     CreateView,
     UpdateView,
     ListView,
-    DeleteView, TemplateView, DetailView
+    DeleteView,
+    TemplateView
 )
 
-from django.contrib.auth.mixins import LoginRequiredMixin
-
-
-from .models import Phone, Brand
 from .forms import PhoneForm, BrandForm
-
-import logging
-
-logger = logging.getLogger(__name__)
+from .models import Phone, Brand
 
 
 # ####### Phone CRUD Actions ########
@@ -32,7 +27,6 @@ class PhoneCreateView(LoginRequiredMixin, CreateView):
         return redirect(self.success_url)
 
     def form_invalid(self, form):
-        logger.error(f"Form errors: {form.errors}")
         return render(self.request, self.template_name, {'form': form, 'errors': form.errors})
 
 
@@ -53,7 +47,6 @@ class PhoneUpdateView(LoginRequiredMixin, UpdateView):
         return redirect(self.success_url)
 
     def form_invalid(self, form):
-        logger.error(f"Form errors: {form.errors}")
         return render(self.request, self.template_name, {'form': form, 'errors': form.errors})
 
 
@@ -75,7 +68,6 @@ class BrandCreateView(LoginRequiredMixin, CreateView):
         return redirect(self.success_url)
 
     def form_invalid(self, form):
-        logger.error(f"Form errors: {form.errors}")
         return render(self.request, self.template_name, {'form': form, 'errors': form.errors})
 
 
@@ -96,7 +88,6 @@ class BrandUpdateView(LoginRequiredMixin, UpdateView):
         return redirect(self.success_url)
 
     def form_invalid(self, form):
-        logger.error(f"Form errors: {form.errors}")
         return render(self.request, self.template_name, {'form': form, 'errors': form.errors})
 
 
