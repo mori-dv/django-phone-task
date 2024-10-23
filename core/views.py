@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import (
     CreateView,
@@ -61,7 +62,7 @@ class BrandCreateView(LoginRequiredMixin, CreateView):
     model = Brand
     form_class = BrandForm
     template_name = 'core/add_brand.html'
-    success_url = '/'
+    success_url = reverse_lazy("core:brand_list")
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -81,7 +82,7 @@ class BrandUpdateView(LoginRequiredMixin, UpdateView):
     form_class = BrandForm
     template_name = 'core/update_brand.html'
     model = Brand
-    success_url = '/'
+    success_url = reverse_lazy("core:brand_list")
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -93,7 +94,7 @@ class BrandUpdateView(LoginRequiredMixin, UpdateView):
 
 class BrandDeleteView(LoginRequiredMixin, DeleteView):
     model = Brand
-    success_url = '/'
+    success_url = reverse_lazy("core:brand_list")
     template_name = 'core/brand_confirm_delete.html'
 
 
